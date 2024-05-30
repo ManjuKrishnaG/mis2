@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>Sales</title>
+
+
+<link rel="stylesheet" href="{% static 'salessa_template/css/bootstrap1.min.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/themefy_icon/themify-icons.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/niceselect/css/nice-select.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/owl_carousel/css/owl.carousel.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/gijgo/gijgo.min.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/font_awesome/css/all.min.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/tagsinput/tagsinput.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/datepicker/date-picker.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/vectormap-home/vectormap-2.0.2.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/scroll/scrollable.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/datatable/css/jquery.dataTables.min.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/datatable/css/responsive.dataTables.min.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/datatable/css/buttons.dataTables.min.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/text_editor/summernote-bs4.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/morris/morris.css' %}">
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/material_icon/material-icons.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/css/metisMenu.css' %}">
+
+<link rel="stylesheet" href="{% static 'salessa_template/css/style1.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/css/colors/default.css' %}" id="colorSkinCSS">
+<link rel="stylesheet" href="{% static 'assets/css/styleheader.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/mobile_responsive_header.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/form.css' %}" />
+
+
+</style>
+</head>
+<body class="crm_body_bg">
+  <div id="header-container">
+    <section class="main_content dashboard_part large_header_bg">
+      <div class="main_content_iner overly_inner ">
+        <div class="container-fluid p-0 ">
+          <div class="header">
+            <ul class="header nav user-menu">
+              <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;" class="naviii">
+                <ul style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;" class="navlist">
+                  <div style="align-items: center;justify-content: center;" class="listdiv">
+                    <a href="#"><li class="naviitems"><span style="color: #53808C;">Dashborad</span><img src="{% static 'icons/dashboard.png' %}"></li></a>
+                    <a href="#"><li class="naviitems"><span style="color: #53808C;">Manage </span><img src="{% static 'icons/manage.png' %}"></li></a>
+                    <!-- <a href="{% url 'calender' %}">
+                      <li class="naviitems">
+                          <span style="color: #53808C;">Calendar</span>
+                          <img src="{% static 'icons/calender.png' %}">
+                      </li>
+                  </a> -->
+                  <a href="/mis_prj/templates/calender.html">
+                    <li class="naviitems">
+                        <span style="color: #53808C;">Calendar</span>
+                        <img src="{% static 'icons/calendar.png' %}">
+                    </li>
+                </a>
+                
+                  
+                  </div>
+                </ul>
+              </div>
+              <div style="display:flex; flex-direction: row; align-items: center; justify-content: center;">
+                <div>
+                      <li class="nav-item1 dropdown">
+                        <a href="#" class="formitems"><p><img class="dateimg" src="{% static 'icons/date.png' %}"></p></a>
+                      </li>
+                    </div>
+                    <div id="timefield" class="nav-item1 dropdown time">
+                      <a href="#" id="time"><p id="currentDateTime"></p></a>
+                    </div>
+            </ul>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div id="page_title_box" class="page_title_box d-flex align-items-center justify-content-between w-100">
+                <div class="page_title_left">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="field_out_box" class="row">
+            <div class="back-whitecard" style="display: flex;flex-wrap: wrap;  align-items: center;justify-content: center;" class="col-lg-8 card_height_100">
+             
+                <div class="field" style="padding: 30px; margin-top: 20px; border: 2px transparent; border-radius: 40px; background-color: #F8F8F8; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); width: 100%;">
+                    <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%;">S.No</th>
+                                <th style="width: 10%;">Created Date</th>
+                                <th style="width: 10%;">Form Number</th>
+                                <th style="width: 20%;">Created By (Name & Emp ID)</th>
+                                <th style="width: 10%;">Division</th>
+                                <th style="width: 10%;">Location</th>
+                                <th style="width: 10%;">Department</th>
+                                <th style="width: 10%;">Form Status</th>
+                                <th style="width: 10%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for employee in employees %}
+                            <tr style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                                <td>1</td>
+                                <td>{{ employee.date }}</td>
+                                <td>{{employee.form_number}}</td>
+                                <td>{{employee.firstname}} ({{employee.empid}})</td>
+                                <td>{{ employee.division }}</td>
+                                <td>{{employee.location}}</td>
+                                <td>Department X</td>
+                                <td>{% if not employee.edit %} Submitted {% elif  employee.edit %} Drafted {% else %} Pending  {% endif %} </td>
+                                <td><button><a href="{% url 'editfield' employee.empid employee.form_number %}"> Action</a></button></td>
+                              </tr>
+                            {% endfor %}
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                
+                  {% block content %}
+                  <canvas id="bar"></canvas>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> 
+  </div>
+  </body>
+<script>
+  function getCurrentDateTime() {
+      var now = new Date();
+
+ 
+      var year = now.getFullYear();
+      var month = now.getMonth() + 1;
+      var day = now.getDate();
+      var hours = now.getHours();
+      var minutes = now.getMinutes();
+      var seconds = now.getSeconds();
+      month = (month < 10 ? "0" : "") + month;
+      day = (day < 10 ? "0" : "") + day;
+      hours = (hours < 10 ? "0" : "") + hours;
+      minutes = (minutes < 10 ? "0" : "") + minutes;
+      seconds = (seconds < 10 ? "0" : "") + seconds;
+      var dateTimeString = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+      return dateTimeString;
+  }
+  function updateDateTime() {
+      
+      var currentDateTime = getCurrentDateTime();
+      document.getElementById('currentDateTime').innerHTML = currentDateTime;
+  }
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+
+
+function openFileManager() {
+    // Trigger click event on file input
+    document.getElementById('fileInput').click();
+}
+
+</script>
+</body>
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+ 
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: #E5F7F5;">
+    <span style="color: #53808C !important;">© 2022 - 2025</span>
+    <a class="text-reset fw-bold" style="color: #53808C !important;" href="#">TITAN COMPANY LTD</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+{% endblock %}
+</html>

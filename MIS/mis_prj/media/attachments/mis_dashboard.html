@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
+ 
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Smarthr - Bootstrap Admin Template" />
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects" />
+    <meta name="author" content="Dreamstechnologies - Bootstrap Admin Template" />
+    <title>Dashboard - MIS</title>
+ 
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/titanlogo.png' %}" />
+
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/all.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'assets/css/line-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/material.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'assets/plugins/morris/morris.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'salessa_template/css/style1.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/dashboardresp.css' %}" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      @media screen and (max-width:473px) {
+        .dates{
+          margin-top: 10px;
+        }
+      }
+      .breadcrumb {
+          background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div style="padding: 10px;" class="header">
+      <ul style="align-items: center; justify-content: center;" class="nav">
+        <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;" class="naviii"> 
+          <ul style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;" class="navlist">
+            <div style="align-items: center;justify-content: center;" class="listdiv">
+              <a href="#"><li class="naviitems"><span style="color: #53808C;">Dashboard</span><img src="{% static 'icons/dashboard.png' %}"></li></a>
+              <a href="#"><li class="naviitems"><span style="color: #53808C;">Manage</span><img src="{% static 'icons/manage.png' %}"></li></a>
+              <a href="#"><li class="naviitems"><span style="color: #53808C;">Calendar</span><img src="{% static 'icons/calendar.png' %}"></li></a>
+            </div>
+          </ul>
+        </div>
+        <li style="align-items:center; justify-content:center;" class="nav-item dropdown">
+          <a href="#" class="formitems"><p style="width:37px;height:auto; margin-right: 5px;"><img class="dates" src="{% static 'icons/date.png' %}"></p></a>
+        </li>
+        <li class="tew nav-item dropdown">
+          <input style="background-color: #FFFFFF; color: #53808C; border-radius: 10px; border: 1px solid #CCCCCC; padding: 5px 10px; font-size: 16px;" id="month-year" type="month" value="Month/Year">
+        </li>
+        <li class="nav-item dropdown has-arrow flag-nav">
+          <div class="formtag">
+            <a href="#" class="formitems"><p class="formitemsp" style="height:auto; margin-right:20px; color: #fff; border: 3px transparent; border-radius: 20px; box-shadow:3px 3px 9px rgba(0, 0, 0, 0.3) ; background-color:#1fb1a2; padding: 14px;"><img class="formitemsimg" src="{% static 'icons/mis_forms.png' %}">MIS Form</p></a>
+            <a href="#" class="formitems" style="height:auto; margin-left: 10px ;margin-right:20px;"><p class="formitemsp" style="color: #fff; border: 3px transparent; border-radius: 20px; box-shadow:3px 3px 9px rgba(0, 0, 0, 0.3) ; background-color:#1fb1a2; padding: 14px;"><img class="formitemsimg" src="{% static 'icons/approve.png' %}">Request Approval</p></a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="content container-fluid pb-0">
+        <div class="page-header">
+          <div class="row">
+            <div class="col-sm-12">
+              <h3 class="page-title"></h3>
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item active"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+<div style="justify-content: center; padding-bottom: 10px;" class="row">
+  {% for data in people_trained_data %}
+  <div class="col-md-6 col-sm-6 col-lg-4 col-xl-3">
+    <div class="card dash-widget dynamic-bg-color" style="height: 230px; overflow: hidden;">
+      <div class="card-body" style="padding-bottom: 20px;">
+        <div class="dash-widget-info" style="width: 100%;">
+          <h4 class="tile-header" style="margin-bottom: 10px; color: dodgerblue;">
+            <strong>
+              <span data-toggle="tooltip" data-placement="top" title="{{data.title}}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                {{data.title}}
+              </span>
+            </strong>
+          </h4>
+          <div class="tileparagragh" style="align-items: center; justify-content: center; display: flex; flex-direction: row; margin-bottom: 20px;">
+            <div class="tile-item" style="height: 25px; border: 2px solid white; background-color: aliceblue; border-radius: 10px;">
+              <p style="align-items: center; justify-content: center;">On-Roll</p>
+            </div>
+            <div class="oval" style="display: flex; flex-direction: row; margin-left: 5px; box-shadow: 5px 10px rgba(0,0,0,0.2);">
+              <img style="width:20px; height: auto; margin: 0px 0px 0px 5px;" src="{% static 'icons/male.png' %}" alt="Male">
+              <p style="align-items: flex-end; margin-left: 12%; display: flex; flex-wrap: wrap;">{{data.permanent_male_count}}</p>
+            </div>
+            <div class="oval" style="display: flex; flex-direction: row; margin-left: 5px; box-shadow: 5px 10px rgba(0,0,0,0.2);">
+              <img style="width:20px; height: auto; margin: 0px 0px 0px 5px;" src="{% static 'icons/female.png' %}" alt="Female">
+              <p style="align-items: flex-end; margin-left: 12%; display: flex; flex-wrap: wrap;">{{data.permanent_female_count}}</p>
+            </div>
+          </div>
+          <div class="tileparagragh" style="align-items: center; justify-content: center; display: flex; flex-direction: row; margin-bottom: 20px;">
+            <div class="tile-item" style="height: 25px; border: 2px solid white; background-color: aliceblue; border-radius: 10px;">
+              <p style="align-items: center; justify-content: center;">Off-Role</p>
+            </div>
+            <div class="oval" style="display: flex; flex-direction: row; margin-left: 5px; box-shadow: 5px 10px rgba(0,0,0,0.2);">
+              <img style="width:20px; height: auto; margin: 0px 0px 0px 5px;" src="{% static 'icons/male.png' %}" alt="Male">
+              <p style="align-items: flex-end; margin-left: 12%; display: flex; flex-wrap: wrap;">{{data.temporary_male_count}}</p>
+            </div>
+            <div class="oval" style="display: flex; flex-direction: row; margin-left: 5px; box-shadow: 5px 10px rgba(0,0,0,0.2);">
+              <img style="width:20px; height: auto; margin: 0px 0px 0px 5px;" src="{% static 'icons/female.png' %}" alt="Female">
+              <p style="align-items: flex-end; margin-left: 12%; display: flex; flex-wrap: wrap;">{{data.temporary_female_count}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+      </div>
+    </div>
+    
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
+    <script data-cfasync="false" src="{% static '/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery-3.7.1.min.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+
+    <script src="{% static 'assets/js/jquery.slimscroll.min.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+
+    <script src="{% static 'assets/plugins/morris/morris.min.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+    <script src="{% static 'assets/plugins/raphael/raphael.min.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+    <script src="{% static 'assets/js/chart.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+    <script src="{% static 'assets/js/greedynav.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+
+    <script src="{% static 'assets/js/layout.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+    <script src="{% static 'assets/js/theme-settings.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+
+    <script src="{% static 'assets/js/app.js' %}" type="595747d73a9fefedfed9204a-text/javascript"></script>
+    <script src="{% static '/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js' %}" data-cf-settings="595747d73a9fefedfed9204a-|49" defer></script>
+    <script>
+      // Get current date
+      const currentDate = new Date();
+      
+      // Format current month and year as "YYYY-MM"
+      const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+      const currentYear = currentDate.getFullYear();
+      const currentMonthYear = `${currentYear}-${currentMonth}`;
+      
+      // Set the value of the input element to the current month
+      document.getElementById('month-year').value = currentMonthYear;
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var elements = document.querySelectorAll('.dynamic-bg-color');
+        elements.forEach(function(element) {
+            var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.2)';
+            element.style.backgroundColor = randomColor;
+        });
+    });
+</script>
+  
+  </body>
+ <!-- Footer -->
+<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+ 
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: #E5F7F5;">
+    <span style="color: #53808C !important;">© 2022 - 2025</span>
+    <a class="text-reset fw-bold" style="color: #53808C !important;" href="#">TITAN COMPANY LTD</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+</html>

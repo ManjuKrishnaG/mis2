@@ -1,0 +1,462 @@
+{% extends 'header.html' %}
+<meta name="csrf-token" content="{{ csrf_token }}">
+
+{% block title %}Calendar Layout{% endblock %}
+
+{% block content %}
+<style>
+  .calendar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .box {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    cursor: pointer; /* Add cursor pointer for calendar boxes */
+  }
+  .box .number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    color: white;
+  }
+  .box i {
+    position: relative;
+    font-size: 24px; /* Adjust icon size as needed */
+  }
+  .hidden {
+    display: none;
+  }
+
+
+ 
+  
+
+</style>
+<div class="white_card_header mt-3">
+    <div class="box_header m-0">
+        <div class="white_card_header mb-3">
+            <div class="box_header m-0">
+    
+<div class="calendar">
+  <div class="box" onclick="toggleContent(1)"><img src="../static/icons/m1.png" style="color:grey; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(2)"><img src="../static/icons/m2.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(3)"><img src="../static/icons/m3.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(4)"><img src="../static/icons/m4.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(5)"><img src="../static/icons/m5.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(6)"><img src="../static/icons/m6.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(7)"><img src="../static/icons/m7.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(8)"><img src="../static/icons/m8.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(9)"><img src="../static/icons/m9.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(10)"><img src="../static/icons/m10.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(11)"><img src="../static/icons/m11.png" style="color:black; width: 50px; height: 50px; "></div>
+    <div class="box" onclick="toggleContent(12)"><img src="../static/icons/m12.png" style="color:black; width: 50px; height: 50px; "></div>
+
+    
+
+    <!--<script>
+      var lastClicked = null;
+
+function toggleContent(month) {
+  document.getElementById('table-content').classList.toggle('hidden');
+          document.getElementById('chart-content').classList.toggle('hidden');
+  console.log(2)
+    var content = document.getElementById("content" + month);
+
+    if (lastClicked === month) {
+        if (content.style.display === "none" || content.style.display === "") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+            lastClicked = null;
+        }
+    } else {
+        if (lastClicked !== null) {
+            var lastContent = document.getElementById("content" + lastClicked);
+            lastContent.style.display = "none";
+        }
+        console.log(1)
+        fetchMonthData(month);
+        // content.style.display = "block";
+        lastClicked = month;
+    }
+}
+
+
+
+function updateTotalColumn() {
+    var selectedTitle = document.getElementById('titleDropdown').value;
+    var rows = document.querySelectorAll('#formDataTable tbody tr');
+    var titleValues = {}; // Object to store sum of values for each title
+    rows.forEach(function(row) {
+        var title = row.dataset.title;
+        var value = parseFloat(row.cells[2].textContent); // Adjust index if needed
+        if (!(title in titleValues)) {
+            titleValues[title] = 0; // Initialize sum to 0 for new title
+        }
+        titleValues[title] += value; // Add value to sum for the title
+    });
+    // Update Total column for each row
+    rows.forEach(function(row) {
+        var title = row.dataset.title;
+        var totalColumn = row.querySelector('.totalColumn');
+        if (selectedTitle === 'All' || title === selectedTitle) {
+            totalColumn.textContent = titleValues[title].toFixed(2); // Display sum for the title
+        } else {
+            totalColumn.textContent = ''; // Hide Total column if title doesn't match
+        }
+    });
+}
+
+      </script>-->
+
+<!--script to show table when mnth is clicked-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('.calendar .box').on('click', function() {
+        var month = $(this).index() + 1; // Get the month number based on the index
+        toggleContent(month);
+    });
+});
+
+function toggleContent(month) {
+    $.ajax({
+        url: '/get_month_data/' + month + '/',
+        type: 'GET',
+        success: function(data) {
+            updateTable(data);
+            updateChart(data);
+            $('#table-content').removeClass('hidden');
+            $('#chart-content').removeClass('hidden');
+        },
+        error: function(error) {
+            console.error("There was an error fetching the data:", error);
+        }
+    });
+}
+
+function updateTable(data) {
+    var tableBody = $('#formDataTable tbody');
+    tableBody.empty(); // Clear the existing table data
+
+    // Create an object to store the totals
+    var totals = {};
+
+    // Calculate totals
+    data.forEach(function(row) {
+        if (!totals[row.title_creation]) {
+            totals[row.title_creation] = 0;
+        }
+        totals[row.title_creation] += parseFloat(row.field_value); // Convert value to float and add to total
+    });
+
+    // Create a set to track displayed titles
+    var displayedTitles = new Set();
+
+    // Iterate through the data to build the table rows
+    data.forEach(function(row) {
+        var tableRow = '<tr>' +
+            '<td>' + row.title_creation + '</td>' +
+            '<td>' + row.field_name + '</td>' +
+            '<td>' + row.field_value + '</td>' +
+            '<td>' + row.division + '</td>' +
+            '<td>' + row.location + '</td>' +
+            '<td>' + row.date + '</td>' +
+            '<td class="totalColumn">' + (displayedTitles.has(row.title_creation) ? '' : totals[row.title_creation]) + '</td>' +
+            '</tr>';
+
+        tableBody.append(tableRow);
+
+        // Mark this title as displayed
+        displayedTitles.add(row.title_creation);
+    });
+}
+
+function updateChart(data) {
+    // Create an object to store the totals
+    var totals = {};
+
+    // Calculate totals
+    data.forEach(function(row) {
+        if (!totals[row.title_creation]) {
+            totals[row.title_creation] = 0;
+        }
+        totals[row.title_creation] += parseFloat(row.field_value); // Convert value to float and add to total
+    });
+
+    // Extract labels and values for the chart
+    var labels = Object.keys(totals);
+    var values = Object.values(totals);
+
+    // Update chart data
+    myChart.data.labels = labels;
+    myChart.data.datasets[0].data = values;
+    myChart.update();
+}
+
+// Initialize the chart
+var ctx = document.getElementById('bar-chart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Total Value',
+            data: [],
+            backgroundColor: '#53808C',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
+
+
+
+
+
+
+
+<div class="view-button">
+  <select id="titleDropdown">
+    <option value="All">All</option>
+    {% for title in titles %}
+        <option value="{{ title.title_creation }}">{{ title.title_creation }}</option>
+    {% endfor %}
+</select>
+</div>
+
+
+
+
+      
+<!--<div class="view-button">
+  <button id="viewButton">View</button>
+  <select id="titleDropdown" style="display:none;">
+      {% for title in titles %}
+          <option value="{{ title.title_creation }}">{{ title.title_creation }}</option>
+      {% endfor %}
+  </select>
+</div>-->
+
+  </div>
+  </div>
+  </div>
+  <div class="row">
+    <div id="table-content" class="col-lg-6 hidden">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title mb-0" style="color: #53808C;">No of People Trained</h4>
+          </div>
+          <div class>
+              <div class="table-responsive">
+                  <table id="formDataTable" class="table mb-0">
+                      <thead>
+                          <tr>
+                              <th style="background-color: #53808C; color: #fff;">Title</th>
+                              <th style="background-color: #53808C; color: #fff;">Field</th>
+                              <th style="background-color: #53808C; color: #fff;">Value</th>
+                              <th style="background-color: #53808C; color: #fff;">Division</th>
+                              <th style="background-color: #53808C; color: #fff;">Location</th>
+                              <th style="background-color: #53808C; color: #fff;">Date</th>
+                              <th style="background-color: #53808C; color: #fff;">Total</th> <!-- New column for Total -->
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for data in form_data %}
+                          <tr data-title="{{ data.title_creation }}">
+                              <td>{{ data.title_creation }}</td>
+                              <td>{{ data.field_name }}</td>
+                              <td>{{ data.field_value }}</td>
+                              <td>{{ data.division }}</td>
+                              <td>{{ data.location }}</td>
+                              <td>{{ data.date }}</td>
+                              <td class="totalColumn">{{ data.field_value }}</td> <!-- Initial value for Total column -->
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+ 
+<script>
+  $(document).ready(function() {
+    // Handle dropdown change event
+    $('#titleDropdown').on('change', function() {
+        var selectedTitle = $(this).val();
+        filterTable(selectedTitle);
+    });
+});
+
+function filterTable(selectedTitle) {
+    var tableRows = $('#formDataTable tbody tr');
+    tableRows.each(function() {
+        var rowTitle = $(this).find('td').first().text(); // Get the title from the first cell
+        if (selectedTitle === 'All' || rowTitle === selectedTitle) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+</script>
+
+  <!--<script>
+    // JavaScript to open the dropdown when the view button is clicked
+    document.getElementById('viewButton').addEventListener('click', function() {
+        document.getElementById('titleDropdown').style.display = 'block';
+        document.getElementById('titleDropdown').focus();
+    });
+
+    // JavaScript to update Total column based on selected title
+    document.getElementById('titleDropdown').addEventListener('change', function() {
+        var selectedTitle = this.value;
+        var rows = document.querySelectorAll('#formDataTable tbody tr');
+        var titleValues = {}; // Object to store sum of values for each title
+        rows.forEach(function(row) {
+            var title = row.dataset.title;
+            var value = parseFloat(row.cells[2].textContent); // Adjust index if needed
+            if (!(title in titleValues)) {
+                titleValues[title] = 0; // Initialize sum to 0 for new title
+            }
+            titleValues[title] += value; // Add value to sum for the title
+        });
+        // Update Total column for each row
+        rows.forEach(function(row) {
+            var title = row.dataset.title;
+            var totalColumn = row.querySelector('.totalColumn');
+            if (selectedTitle === 'All' || title === selectedTitle) {
+                totalColumn.textContent = titleValues[title].toFixed(2); // Display sum for the title
+            } else {
+                totalColumn.textContent = ''; // Hide Total column if title doesn't match
+            }
+        });
+        // Hide the dropdown after selection
+        this.style.display = 'none';
+    });
+
+    // Optionally, hide the dropdown if it loses focus without making a selection
+    document.getElementById('titleDropdown').addEventListener('blur', function() {
+        this.style.display = 'none';
+    });
+</script>-->
+
+
+
+      <div id="chart-content" class="col-md-6 hidden">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title" style="color: #53808C;">Bar Chart</h5>
+          </div>
+          <div>
+            <canvas id="bar-chart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+      <!--<script>
+        document.getElementById('titleDropdown').addEventListener('change', function() {
+          var selectedTitle = this.value;
+          var tableRows = document.querySelectorAll('#formDataTable tbody tr');
+
+          tableRows.forEach(function(row) {
+              var title = row.getAttribute('data-title');
+              if (selectedTitle === 'All' || title === selectedTitle) {
+                  row.style.display = '';
+              } else {
+                  row.style.display = 'none';
+              }
+          });
+      });
+
+
+      </script>-->
+
+      <script>
+        // Get the canvas element
+        var ctx = document.getElementById('bar-chart').getContext('2d');
+      
+        // Define your data
+        var data = {
+          labels: ['No.of people trained', 'Manhours', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [{
+            label: 'No of people trained',
+            data: [12, 19, 3, 5, 2, 3, 10, 6, 15, 8, 4, 9],
+            backgroundColor: '#53808C',
+            borderWidth: 2
+          }]
+        };
+      
+        // Create the chart
+        var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: data,
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        });
+      
+        // Function to toggle content visibility
+        // function toggleContent(element) {
+          // Toggle visibility of table and chart content
+          // document.getElementById('table-content').classList.toggle('hidden');
+          // document.getElementById('chart-content').classList.toggle('hidden');
+      //   }
+       </script>
+
+
+<!--script for table to view when month is clicked-->
+<script>
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          function getCookie(name) {
+              let cookieValue = null;
+              if (document.cookie && document.cookie !== '') {
+                  const cookies = document.cookie.split(';');
+                  for (let i = 0; i < cookies.length; i++) {
+                      const cookie = jQuery.trim(cookies[i]);
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                      }
+                  }
+              }
+              return cookieValue;
+          }
+          if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+              xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+          }
+      }
+  });
+</script>
+
+
+
+
+
+{% endblock %}

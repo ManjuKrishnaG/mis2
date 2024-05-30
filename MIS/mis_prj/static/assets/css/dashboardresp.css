@@ -1,0 +1,169 @@
+.nav {
+  margin-left: 400px;
+}
+
+.tew {
+  padding: 10px;
+  margin-right: 100px;
+}
+
+.formitemsimg {
+  width: 30px;
+}
+
+.page-wrapper .content {
+  padding: 15px;
+}
+
+.oval {
+  margin-left: 20px;
+}
+
+.formtag {
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (max-width:1564px) {
+  .nav {
+    margin-left: 370px;
+  }
+
+  .tew {
+    padding: 10px;
+    margin-right: 50px;
+  }
+}
+
+@media screen and (max-width:1473px) {
+  .nav {
+    margin-left: 265px;
+  }
+
+  .tew {
+    padding: 10px;
+    margin-right: 35px;
+  }
+}
+
+@media screen and (max-width:1324px) {
+  .nav {
+    margin-left: 200px;
+  }
+
+  .tew {
+    padding: 5px;
+    margin-right: 29px;
+  }
+}
+
+@media screen and (max-width:1200px) {
+  .nav {
+    margin-left: 130px;
+  }
+}
+
+@media screen and (max-width:1248px) and (min-width:1200px) {
+  .nav {
+    margin-left: 160px;
+  }
+
+  .tew {
+    padding: 5px;
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width:1189px) {
+  .nav {
+    margin-left: 0px;
+  }
+
+  .tew {
+    padding: 5px;
+    margin-right: 5px;
+  }
+}
+
+@media screen and (max-width:584px) {
+  .formitems {
+    width: 140px;
+    height: auto;
+  }
+
+  .formitemsimg {
+    width: 20px;
+    height: auto;
+  }
+
+  .formitemsp {
+    font-size: 10px;
+  }
+}
+
+.row {
+  margin-top: 50px;
+}
+
+@media screen and (min-width: 921px) {
+  .row {
+    margin-top: 20px;
+  }
+
+}
+
+@media screen and (max-width:1021px) {
+  .formtag {
+    margin-top: 10px;
+  }
+
+  .row {
+    margin-top: 55px;
+  }
+}
+
+@media screen and (max-width:531px) {
+  .row {
+    margin-top: 80px;
+  }
+}
+
+
+
+@media screen and (max-width:473px) {
+  .tew {
+    margin-top: 10px;
+  }
+
+  .row {
+    margin-top: 90px;
+  }
+}
+
+
+@media screen and (min-width: 740px) and (max-width: 1000px) {
+  .col-sm-6 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1109) {
+  .tileparagraph {
+    width: 20px;
+  }
+}
+
+@media screen and (max-width:365px) {
+  .oval {
+    margin-left: 5px;
+  }
+}
+
+
+@media (min-width: 1200px) and (max-width:1400px) {
+  .col-xl-3 {
+    flex: 0 0 auto;
+    width: 33%;
+  }
+}

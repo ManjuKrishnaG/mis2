@@ -1,0 +1,961 @@
+{% extends "header.html" %}
+{% load static %}
+<head>
+  
+  <style>
+  .file-item {
+  display: flex; /* Use flexbox layout */
+  align-items: center; /* Align items vertically */
+}
+
+.file-icon {
+  width: 30px; /* Adjust width of the icon */
+  height: 30px; /* Adjust height of the icon */
+  margin-right: 10px; /* Add margin between icon and attachment name */
+}
+.green {
+  background-color: green !important;
+}
+.attachment-name {
+  flex-grow: 1; /* Allow attachment name to grow to fill remaining space */
+  white-space: nowrap; /* Prevent attachment name from wrapping onto new line */
+  overflow: hidden; /* Hide overflow text if attachment name is too long */
+  text-overflow: ellipsis; /* Display ellipsis for overflow text */
+}
+
+.delete-cross {
+  cursor: pointer; /* Add cursor pointer to indicate clickability */
+  margin-left: 10px; /* Add margin between attachment name and close button */
+}
+.attachment-item {
+  display: flex !important;
+  align-items: center !important;
+  margin-bottom: 10px;
+}
+#clr {
+    color: green;
+}
+
+</style>
+<title>Forms</title>
+</head>
+<body>
+
+{% block content %}
+    
+ 
+  
+                    
+    
+     <form action="" title_creation="{{ data.title_creation }}" method="POST" id="regForm">
+      {% csrf_token %}
+
+{% with total_steps=tc|length %}
+  {% for data in tc %}
+ 
+    <div style="text-align:center;margin-top:10px;">
+      <div class="tab" id="form22">
+        {% for c in dc %}
+      <span class="step {% if forloop.counter <= forloop.parentloop.counter  %} finish{% endif %}"> </span>
+    {% endfor %}
+        <div id="form-container">
+          <h4 style="text-align: center; color:#1AA199; margin-top: 30px;">{{ data.title_creation }}<span class="asterisk">*</span></h4>
+          <input type="hidden" name="title_create" id="title_create" value="{{ data.title_creation }}">
+          <div class="input-row">
+            {% for field in data.field_name.all %}
+            <input type="hidden" name="formid" id="formid" {% for n in values %}  value="{{ n.form_number }}" {% endfor %}>
+              <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                <div class="field-labels" style="color:#1AA199;align-items: center; justify-content: center; margin-top: 20px;">{{ field.field }}<span class="asterisk">*</span></div>
+                <input type="text" readonly
+                {% for n in values %} 
+                {% if n.title_creation == data.title_creation %} 
+                {% if n.field_name == field.field  %} value="{{n.field_value}}" {% endif %} 
+                {% if not n.edit%} readonly
+                {% endif %} 
+                {% endif %} 
+
+                {% endfor %}name="{{data.title_creation}}_{{ field.field }}" id="{{title_creation}}_{{ field.field }}" class="ash-border narrow-input" style="margin-top: 20px; align-items: center; justify-content: center; border: 2px solid #F0F0F0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+              </div>
+            {% endfor %}
+          </div>
+          <div class="button-row" style="margin-top: 60px;">
+            <button id="cancelBtn" class="delete-button" onclick="cancelForm('regForm', '{{ data.title_creation }}')">
+              <img src="{% static 'icons/delete.png' %}" style="width: 20px; height: 20px;"> Cancel
+          </button>
+                      <button id="draftBtn" class="draft-button"><img src="{% static 'icons/draft.png' %}" style="width: 20px; height: 20px;"> Save as Draft</button>
+          </div>   
+        </div>
+        <div style="overflow:auto; margin-top: 10px;">
+          <div style="float:right;">
+            {% if forloop.counter != 1 %}
+              <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+            {% endif %}
+            
+              <button id="nextBtn" onclick="nextPrev(1)" type="button" class="submit-button" >
+                <img src="{% static 'icons/submit.png' %}" style="width: 20px; height: 20px;" alt="Submit">
+                Save and Next
+              </button>
+        
+          </div> 
+        </div>  
+      </div>
+      
+    </div>
+  {% endfor %}
+{% endwith %}
+<div class="tab" id="form22">
+<div id="form-container">
+  <h4 style="text-align: center; color:#1AA199; margin-top: 30px;">Plan for the Next Month-RO East<span class="asterisk">*</span></h4>
+  <div class="input-row">
+      <div class="field-labels" style="color:#1AA199; margin-top: 20px; margin-right: 20px;">Enter Plan for the Next Month-RO East <span class="asterisk">*</span></div>
+      {{ form.Plan_forthe_Next_Month.errors }}
+      {{ form.Plan_forthe_Next_Month }}
+      <input type="text" name="plan_for_next_month" placeholder="Enter Plan for Next Month">
+  </div>
+  <br><br>
+  <div style="display: flex; flex-direction: row;">
+      <div class="attachment-sec" style="display: flex; flex-direction: column;">
+          <p style="color: rgb(10, 152, 149);">Attachments</p>
+          <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; border: 2px transparent; border-radius: 4px; height: 180px; width: 80px; padding: 20px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+              {{ form.attachment.errors }}
+              <input type="file" id="file" name="attachment" style="display: none;" multiple onchange="displayAttachment(this)">
+              <img style="cursor: pointer; padding-bottom: 40px; width: 40px; height: auto;" src="{% static 'icons/camera.png' %}" onclick="document.getElementById('file').click()" alt="Camera Icon">
+              <img style="cursor: pointer; width: 40px; height: auto;" src="{% static 'icons/upload.png' %}" onclick="document.getElementById('file').click()" alt="Upload Icon">
+          </div>
+      </div>
+      <div class="withinbox" style="flex-direction: column; margin-left: 5%; border: 2px transparent; border-radius: 4px; padding: 20px; height: auto; width: 900px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        <div id="attachmentContainer" name="attachment">
+          <!--<div class="attachment-item" id="attachment-{{ attachment.id }}">
+            {% for attachment in attachments %}
+            
+              <p class="attachment-name">{{ attachment.attachment.name }}</p>
+             
+              <textarea class="remarks-box" placeholder="Add remarks"></textarea>
+              <span class="delete-cross">&times;</span>
+          
+                
+            {% endfor %}
+          </div>-->
+        </div>
+        
+
+        
+    </div>
+    
+  </div>
+  <div class="card-body">
+      <div class="button-row" style="margin-top: 60px;">
+          <button id="cancelBtn" class="delete-button"><img src="{% static 'icons/delete.png' %}" style="width: 20px; height: 20px;"> Cancel</button>
+          <button id="draftBtn" class="draft-button"><img src="{% static 'icons/draft.png' %}" style="width: 20px; height: 20px;"> Save as Draft</button>
+          <button class="submit-button1 " data-form-id="22"><img src="{% static 'icons/submit.png' %}" style="width: 20px; height: 20px;"> Submit</button>
+      </div>
+  </div>
+  <div style="overflow:auto; margin-top: 10px;">
+      <div style="float:right;">
+          <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+      </div>
+  </div>
+</div>
+</div>
+    </form>
+
+  <!-- Modal for button popup-->
+<div id="myModal" class="modal" >
+  <!-- Modal content -->
+  <div class="modal-content" style="display: block; border-radius: 20px; width: 70%; max-width: 600px; height: 150px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <span class="close" style="position: absolute; top: 10px; right: 10px; font-size: 20px; cursor: pointer; color:black;">&times;</span>
+    <p id="modalMessage" style="font-size: 20px; color: #1AA199; text-align: center; margin: 0;"></p>
+  </div>
+</div> 
+<div class="tab-container">
+  
+
+
+<script>
+  $(document).ready(function() {
+    
+    // Attach the click event to the parent element and delegate it to the cancel button
+    $('#regForm').on('click', '#cancelBtn', function(event) {
+      console.log("Cancel button clicked");
+      event.preventDefault(); // Prevent default form submission behavior
+      var titleCreation = $(this).closest('.tab').find('').text(); // Get the title creation from the closest .tab
+      cancelForm('regForm', titleCreation); // Call the cancelForm function with formId and titleCreation
+      displayModal("<img src='{% static 'icons/cancel.png' %}' alt='Success Icon' style='vertical-align: middle; margin-right: 10px; width: 60px; height: 60px;'><span style='font-weight: bold;'>Form cancelled successfully!</span>");
+      
+    });
+
+    // Function to display the modal popup
+    function displayModal(content) {
+      $('#myModal').show(); // Show the modal
+      $('#modalMessage').html(content); // Set the content inside the modal
+    }
+
+    // Close the modal when the close button is clicked
+    $('.close').click(function() {
+      $('#myModal').hide(); // Hide the modal
+    });
+  });
+</script>
+
+  <script>
+    function cancelForm(formId, titleCreation) {
+      // Clear input fields of the specified form
+     $('#' + formId + ' input[type="text"]').val('');      
+      // Send AJAX request to delete data from the database
+      $.ajax({
+          type: 'POST',
+          url: '{% url "delete_data" %}',
+          data: {
+              csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+              title_creation: titleCreation  // Include the title_creation value
+          },
+          success: function(response) {
+              // Optionally, handle success response
+          },
+          error: function(xhr, textStatus, errorThrown) {
+              console.error('Error:', errorThrown);
+          }
+      });
+  }
+  
+  // Add event listeners to all cancel buttons
+  // Get all buttons with class "delete-button"
+
+    </script>
+
+      
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+ 
+// Function to get CSRF cookie value
+
+</script>
+<script>
+  $(document).ready(function() {
+    $('.submit-button').click(function(e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+        var formid = $('#formid').val();  // Get the value of the formid input field
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize() + '&formid=' + formid,  // Include formid in the data
+            success: function(response) {
+                // Handle success response if needed
+                console.log(response);
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle error response if needed
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+});
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.submit-button').click(function(e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function(response) {
+                // Handle success response if needed
+                // For example, show a success message
+                console.log(response);
+            },
+            error: function(xhr, errmsg, err) {
+                // Handle error response if needed
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+});
+</script>
+<script>
+  $(document).ready(function() {
+    $('.submit-button1').click(function(e) {
+        e.preventDefault();
+
+        // Retrieve the CSRF token from the cookie
+        var csrftoken = getCookie('csrftoken');
+
+        // Set the edit field to false
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'change_edit_field' %}',
+            data: {
+                edit: false
+            },
+            beforeSend: function(xhr, settings) {
+                // Include the CSRF token in the headers of the AJAX request
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            },
+            success: function(response) {
+                console.log('Edit field set to false');
+                
+                // Upload files after setting the edit field to false
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'upload_files' %}',
+                    data: new FormData($('#regForm')[0]), // Serialize the form including file inputs
+                    processData: false, // Prevent jQuery from automatically processing the data
+                    contentType: false, // Prevent jQuery from setting the content type
+                    beforeSend: function(xhr, settings) {
+                        // Include the CSRF token in the headers of the AJAX request
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    },
+                    success: function(response) {
+                        console.log('Files uploaded successfully');
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+});
+
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Check if the cookie contains the CSRF token
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+<script>
+
+
+  var currentTab = 0; // Start from the first tab (index 0)
+  showTab(currentTab);
+
+  function showTab(n) {
+    var tabs = document.getElementsByClassName("tab");
+    if (n >= tabs.length) {
+        // If already on the last tab, exit the function
+        return false;
+    }
+    for (var i = 0; i < tabs.length; i++) {
+        tabs[i].style.display = "none";
+    }
+    tabs[n].style.display = "block";
+    currentTab = n;
+}
+
+  function nextPrev(n) {
+      // Check if there's a form on the current tab
+      var currentForm = document.getElementById("regForm");
+      if (currentForm.checkValidity()) {
+          showTab(currentTab + n);
+      } else {
+          // If the form is not valid, prevent navigation
+          currentForm.reportValidity();
+      }
+  }
+ 
+
+</script>
+
+  
+ 
+  <script>
+    function getCurrentDateTime() {
+        var now = new Date();
+  
+   
+        var year = now.getFullYear();
+        var month = now.getMonth() + 1;
+        var day = now.getDate();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+        month = (month < 10 ? "0" : "") + month;
+        day = (day < 10 ? "0" : "") + day;
+        hours = (hours < 10 ? "0" : "") + hours;
+        minutes = (minutes < 10 ? "0" : "") + minutes;
+        seconds = (seconds < 10 ? "0" : "") + seconds;
+        var dateTimeString = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+        return dateTimeString;
+    }
+    function updateDateTime() {
+        
+        var currentDateTime = getCurrentDateTime();
+        document.getElementById('currentDateTime').innerHTML = currentDateTime;
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+  
+  
+  function openFileManager() {
+      // Trigger click event on file input
+      document.getElementById('fileInput').click();
+  }
+  
+  </script>
+   
+<script>
+  // Get the modal
+  var modal = document.getElementById("myModal");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // Function to display modal with message
+  function displayModal(message) {
+    var modalMessage = document.getElementById("modalMessage");
+    modalMessage.innerHTML = message;
+    modal.style.display = "block";
+  }
+
+  // Function to close the modal when the user clicks on <span> (x)
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // Add event listeners to all "Save as Draft" buttons
+  // Get all buttons with class "draftBtn"
+var draftButtons = document.querySelectorAll(".draft-button");
+
+// Attach event listeners to each button
+for (var i = 0; i < draftButtons.length; i++) {
+  draftButtons[i].addEventListener("click", function() {
+    console.log("Draft button clicked");
+    displayModal("<img src='{% static 'icons/saveasdraft.png' %}' alt='Success Icon' style='vertical-align: middle; margin-right: 10px; width: 60px; height: 60px;'><span style='font-weight: bold;'>Form drafted successfully!</span>");
+  });
+}
+
+
+
+// Add event listeners to all "Cancel" buttons
+// Get all buttons with class "cancelBtn"
+
+// Attach event listeners to each "Cancel" button
+// Attach event listener to the cancel button
+// Attach event listener to the cancel button
+
+
+// Get the submit button in the last form
+var submitButton = document.querySelector(".submit-button1");
+
+// Attach an event listener to the submit button
+submitButton.addEventListener("click", function() {
+  
+//  document.getElementById("edit").checked = true;
+  console.log("Submit button clicked");
+  displayModal("<img src='{% static 'icons/submit (2).png' %}' alt='Success Icon' style='vertical-align: middle; margin-right: 10px; width: 60px; height: 60px;'><span style='font-weight: bold;'>Form saved successfully!</span>");
+  
+});
+
+// Add event listeners to all cancel buttons
+// Get all buttons with class "delete-button"
+
+
+  </script>
+  <script>
+    // Function to create a delete button
+    function createDeleteButton(attachmentNode, attachmentId) {
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = '✖'; // You can use any icon or text for the delete button
+        deleteButton.classList.add("delete-button"); // Add a class to style the delete button
+    
+        deleteButton.addEventListener("click", function() {
+            if (attachmentId) {
+                // Send an AJAX request to delete the attachment from the backend
+                fetch(`/delete_attachment/${attachmentId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken') // Ensure CSRF token is included
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        attachmentNode.remove(); // Remove the attachment node when delete button is clicked
+                    } else {
+                        alert('Error deleting attachment: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            } else {
+                // For new attachments that are not yet saved, just remove the node
+                attachmentNode.remove();
+            }
+        });
+    
+        return deleteButton;
+    }
+    
+    // Define a mapping of file extensions to icon URLs and styles
+    var fileIcons = {
+      'jpg': {
+      url: "{% static 'icons/ima.jpg' %}", // Example: icon for JPG files
+      style: "width: 30px; height: 30px;", // Example: CSS style for the image
+    },
+    
+    'jpeg': {
+      url: "{% static 'icons/ima.jpg' %}", // Example: icon for JPG files
+      style: "width: 30px; height: 30px;", // Example: CSS style for the image
+    },
+    
+    'png': {
+      url: "{% static 'icons/ima.jpg' %}", // Example: icon for JPG files
+      style: "width: 30px; height: 30px;", // Example: CSS style for the image
+    },
+    'pdf': {
+      url: "{% static 'icons/pdf.jpg' %}", // Example: icon for JPG files
+      style: "width: 30px; height: 30px;", // Example: CSS style for the image
+    },
+    'xlsx': {
+      url: "{% static 'icons/xl.jpg' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'xls': {
+      url: "{% static 'icons/xl.jpg' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'csv': {
+      url: "{% static 'icons/xl.jpg' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'doc': {
+      url: "{% static 'icons/word.png' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'docx': {
+      url: "{% static 'icons/word.png' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'txt': {
+      url: "{% static 'icons/default.jpg' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'ppt': {
+      url: "{% static 'icons/ppt.jpeg' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'pptx': {
+      url: "{% static 'icons/ppt.jpeg' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'zip': {
+      url: "{% static 'icons/zip.jpg' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'rar': {
+      url: "{% static 'icons/rar.jpg' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'mp3': {
+      url: "{% static 'icons/audio.jpg' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'mp4': {
+      url: "{% static 'icons/video.png' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+    'avi': {
+      url: "{% static 'icons/video.png' %}", 
+      style: "width: 30px; height: 30px;", 
+    },
+        // Add more file extensions and corresponding icon URLs and styles as needed
+    };
+    
+    // Function to map file extensions to icons
+    function getFileIcon(fileName) {
+        // Extract the file extension
+        var fileExtension = fileName.split('.').pop().toLowerCase();
+    
+        // Return the icon URL and style corresponding to the file extension, or null if not found
+        return fileIcons[fileExtension] || null;
+    }
+    
+    // Function to display attachment names, icons, and remarks boxes
+    function displayAttachment(input) {
+        var attachmentContainer = document.getElementById("attachmentContainer");
+        var files = input.files;
+        for (var i = 0; i < files.length; i++) {
+            var fileName = files[i].name;
+            var attachmentNode = document.createElement("div");
+            attachmentNode.classList.add("attachment-item");
+    
+            // Create the icon element
+            var fileIcon = document.createElement("img");
+            var iconData = getFileIcon(fileName);
+            if (iconData) {
+                fileIcon.src = iconData.url; // Set the icon URL
+                fileIcon.setAttribute("style", iconData.style); // Set the icon style
+            } else {
+                // If no icon is found for the file extension, use a default icon
+                fileIcon.src = '/static/icons/default-icon.png';
+                fileIcon.setAttribute("style", 'width: 30px; height: 30px;'); // Default icon style
+            }
+            fileIcon.classList.add("file-icon");
+    
+            var fileNameNode = document.createElement("span");
+            fileNameNode.textContent = fileName;
+    
+            var remarksInput = document.createElement("input");
+            remarksInput.setAttribute("type", "text");
+            remarksInput.setAttribute("name", "remarks"); // Set the name attribute to "remarks"
+    
+            var deleteButton = createDeleteButton(attachmentNode, null); // Set attachmentId to null for new attachments
+    
+            attachmentNode.appendChild(fileIcon);
+            attachmentNode.appendChild(fileNameNode);
+            attachmentNode.appendChild(deleteButton); // Place the delete button next to the file name
+            attachmentNode.appendChild(remarksInput);
+    
+            attachmentContainer.appendChild(attachmentNode);
+        }
+    
+        // Store attachments in local storage
+        storeAttachments();
+    }
+    
+    // Function to store attachments and remarks in local storage
+    function storeAttachments() {
+        var attachmentContainer = document.getElementById("attachmentContainer");
+        var attachments = [];
+        var attachmentNodes = attachmentContainer.getElementsByClassName("attachment-item");
+        for (var i = 0; i < attachmentNodes.length; i++) {
+            var fileName = attachmentNodes[i].getElementsByTagName("span")[0].textContent;
+            var iconUrl = attachmentNodes[i].getElementsByClassName("file-icon")[0].src;
+            var remarks = attachmentNodes[i].getElementsByTagName("input")[0].value;
+            attachments.push({ fileName: fileName, iconUrl: iconUrl, remarks: remarks });
+        }
+        localStorage.setItem("attachments", JSON.stringify(attachments));
+    }
+    
+    // Function to populate attachment container from local storage
+    function populateAttachmentsFromStorage() {
+        var attachmentContainer = document.getElementById("attachmentContainer");
+        attachmentContainer.innerHTML = ""; // Clear previous attachments
+    
+        var storedAttachments = JSON.parse(localStorage.getItem("attachments"));
+        if (storedAttachments) {
+            for (var i = 0; i < storedAttachments.length; i++) {
+                var attachmentNode = document.createElement("div");
+                attachmentNode.classList.add("attachment-item");
+    
+                // Create the icon element
+                var fileIcon = document.createElement("img");
+                fileIcon.src = storedAttachments[i].iconUrl;
+                fileIcon.setAttribute("style", 'width: 30px; height: 30px;');
+                fileIcon.classList.add("file-icon");
+    
+                var fileNameNode = document.createElement("span");
+                fileNameNode.textContent = storedAttachments[i].fileName;
+    
+                var remarksInput = document.createElement("input");
+                remarksInput.setAttribute("type", "text");
+                remarksInput.value = storedAttachments[i].remarks;
+    
+                var deleteButton = createDeleteButton(attachmentNode, null); // Set attachmentId to null for new attachments
+    
+                attachmentNode.appendChild(fileIcon);
+                attachmentNode.appendChild(fileNameNode);
+                attachmentNode.appendChild(deleteButton); // Place the delete button next to the file name
+                attachmentNode.appendChild(remarksInput);
+    
+                attachmentContainer.appendChild(attachmentNode);
+            }
+        }
+    }
+    
+    
+    
+    // Function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Call the populateAttachmentsFromStorage function when the page loads
+    window.onload = function() {
+        populateAttachmentsFromStorage();
+    };
+    
+    
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!--this script is for button popup-->
+    
+    <script>
+      // Get the modal
+      var modal = document.getElementById("myModal");
+    
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+    
+      // Function to display modal with message
+      function displayModal(message) {
+        var modalMessage = document.getElementById("modalMessage");
+        modalMessage.innerHTML = message;
+        modal.style.display = "block";
+      }
+    
+      // Function to close the modal when the user clicks on <span> (x)
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+    
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    
+      // Add event listeners to all "Save as Draft" buttons
+      // Get all buttons with class "draftBtn"
+    var draftButtons = document.querySelectorAll(".draft-button");
+    
+    // Attach event listeners to each button
+    for (var i = 0; i < draftButtons.length; i++) {
+      draftButtons[i].addEventListener("click", function() {
+        console.log("Draft button clicked");
+        displayModal("<img src='{% static 'icons/saveasdraft.png' %}' alt='Success Icon' style='vertical-align: middle; margin-right: 10px; width: 60px; height: 60px;'><span style='font-weight: bold;'>Form drafted successfully!</span>");
+      });
+    }
+    
+    
+    
+    // Add event listeners to all "Cancel" buttons
+    // Get all buttons with class "cancelBtn"
+    var cancelButtons = document.querySelectorAll(".delete-button");
+    
+    // Attach event listeners to each "Cancel" button
+    cancelButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        console.log("Cancel button clicked");
+        displayModal("<img src='{% static 'icons/cancel.png' %}' alt='Success Icon' style='vertical-align: middle; margin-right: 10px; width: 60px; height: 60px;'><span style='font-weight: bold;'>Form cancelled successfully!</span>");
+      });
+    });
+    
+    // Get the submit button in the last form
+    var submitButton = document.querySelector(".submit-button1[data-form-id='22']");
+    
+    // Attach an event listener to the submit button
+    submitButton.addEventListener("click", function() {
+      console.log("Submit button clicked");
+      displayModal("<img src='{% static 'icons/submit (2).png' %}' alt='Success Icon' style='vertical-align: middle; margin-right: 10px; width: 60px; height: 60px;'><span style='font-weight: bold;'>Form saved successfully!</span>");
+    });
+    
+    
+    
+    
+    </script>
+    
+    <script>
+        // Define a mapping of file extensions to icon URLs
+        const fileIcons = {
+          'jpg': {
+        url: "{% static 'icons/ima.jpg' %}", // Example: icon for JPG files
+        style: "width: 30px; height: 30px;", // Example: CSS style for the image
+      },
+      
+      'jpeg': {
+        url: "{% static 'icons/ima.jpg' %}", // Example: icon for JPG files
+        style: "width: 30px; height: 30px;", // Example: CSS style for the image
+      },
+      
+      'png': {
+        url: "{% static 'icons/ima.jpg' %}", // Example: icon for JPG files
+        style: "width: 30px; height: 30px;", // Example: CSS style for the image
+      },
+      'pdf': {
+        url: "{% static 'icons/pdf.jpg' %}", // Example: icon for JPG files
+        style: "width: 30px; height: 30px;", // Example: CSS style for the image
+      },
+      'xlsx': {
+        url: "{% static 'icons/xl.jpg' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'xls': {
+        url: "{% static 'icons/xl.jpg' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'csv': {
+        url: "{% static 'icons/xl.jpg' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'doc': {
+        url: "{% static 'icons/word.png' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'docx': {
+        url: "{% static 'icons/word.png' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'txt': {
+        url: "{% static 'icons/default.jpg' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'ppt': {
+        url: "{% static 'icons/ppt.jpeg' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'pptx': {
+        url: "{% static 'icons/ppt.jpeg' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'zip': {
+        url: "{% static 'icons/zip.jpg' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'rar': {
+        url: "{% static 'icons/rar.jpg' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'mp3': {
+        url: "{% static 'icons/audio.jpg' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'mp4': {
+        url: "{% static 'icons/video.png' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+      'avi': {
+        url: "{% static 'icons/video.png' %}", 
+        style: "width: 30px; height: 30px;", 
+      },
+        };
+      
+        function openFileManager() {
+        // Create a file input element
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*,.pdf,.xlsx,.xls,.csv,.jpg,.png,text/csv,.doc,.docx,.txt,.xls,.ppt,.pptx,.zip,.rar,.mp3,.mp4,.avi,.ppt,.pptx'; // Adjust accepted file types as needed
+      
+        // Listen for changes to the file input
+        fileInput.addEventListener('change', function(event) {
+            const fileList = event.target.files; // Get the selected files
+            if (fileList.length > 0) {
+                const file = fileList[0];
+                const fileName = file.name; // Get the name of the selected file
+                const fileExtension = fileName.split('.').pop().toLowerCase(); // Get the file extension
+      
+                // Create a new container for attachment item and remarks input
+                const attachmentContainer = document.createElement('div');
+                attachmentContainer.classList.add('attachment-container');
+      
+                // Create a new attachment item container
+                const attachmentItem = document.createElement('div');
+                attachmentItem.classList.add('attachment-item');
+                attachmentItem.style.display = 'flex'; // Display the elements in a row
+                attachmentItem.style.alignItems = 'center'; // Align the items vertically
+                attachmentItem.style.marginBottom = '10px'; // Add margin to the bottom for spacing
+      
+                // Icon based on file type
+                const iconSrc = fileIcons[fileExtension] || 'default-icon.png'; // Default icon if not found
+                const icon = document.createElement('img');
+                icon.classList.add('file-icon');
+                icon.src = fileIcons[fileExtension].url; // Set the image source from the fileIcons object
+                icon.style = fileIcons[fileExtension].style; // Set the CSS style for the image
+                attachmentItem.appendChild(icon);
+      
+                // Attachment name
+                const attachmentName = document.createElement('div');
+                attachmentName.classList.add('attachment-name');
+                attachmentName.textContent = fileName;
+                attachmentItem.appendChild(attachmentName);
+      
+                // Cross button for delete action
+                const deleteCross = document.createElement('div');
+                deleteCross.classList.add('delete-cross');
+                deleteCross.textContent = '✖';
+                deleteCross.style.marginLeft = '10px'; // Add margin to the left for spacing
+                deleteCross.style.cursor = 'pointer'; // Change cursor to pointer
+                deleteCross.addEventListener('click', function() {
+                    attachmentContainer.remove(); // Remove the entire attachment container when the delete button is clicked
+                });
+                attachmentItem.appendChild(deleteCross);
+      
+                // Append the attachment item container to the attachment container
+                attachmentContainer.appendChild(attachmentItem);
+                
+      
+                // Remarks input
+                const remarksInput = document.createElement('input');
+                remarksInput.classList.add('remarks-input');
+                remarksInput.type = 'text';
+                remarksInput.placeholder = 'Remarks (optional)';
+                attachmentContainer.appendChild(remarksInput);
+      
+                // Append the attachment container to the attachment container
+                const attachmentsWrapper = document.getElementById('attachmentContainer');
+                attachmentsWrapper.appendChild(attachmentContainer);
+            }
+        });
+      
+        // Trigger the file input dialog when the element is clicked
+        fileInput.click();
+      }
+      
+      
+      
+      
+      
+      </script>
+</div>
+</div>
+</div>
+  {% endblock %}
+
+  </body>
+  </html>

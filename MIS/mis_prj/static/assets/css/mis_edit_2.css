@@ -1,0 +1,60 @@
+@media screen and (max-width:1065px) {
+    .withinbox{
+    width: 550px;}
+}
+@media screen and (max-width:718px) {
+    .withinbox{
+    width: 400px;}
+}
+@media screen and (max-width:600px) {
+    .withinbox{
+    width: 320px;}
+}
+@media screen and (max-width:478px) {
+    .withinbox{
+    width: 280px;}
+}
+@media screen and (max-width:386px) {
+    .withinbox{
+    width: 240px;}
+}
+@media screen and (max) {
+    
+}
+
+.card-body{
+    margin-left:300px;
+}
+@media screen and (max-width:845px){
+    .card-body{
+        margin-left: 100px;
+    }
+}
+@media screen and (max-width:617px){
+    .card-body{
+        margin-left: 40px;
+    }
+}
+@media screen and (max-width:478px){
+    .card-body{
+        margin-left: 10px;
+    }
+}
+@media screen and (max-width:386px){
+    .attachment-sec{
+        width: 70px;
+    }
+    .attachment-sec img{
+        width: 10px;
+    }
+}
+
+@media screen and (max-width:386px){
+    .btn{
+        width: 120px;
+        font-size: 12px;
+    }
+    .btn-success {
+        margin-top: 5px;
+    }
+}

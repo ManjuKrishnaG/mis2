@@ -1,0 +1,1202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+   <style>
+    body {
+    color: rgb(177, 175, 175);
+}
+.select2-container {
+            width: 200px !important;
+        }
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            width: 100%;
+        }
+
+        .dropdown a {
+            color: black;
+            padding: 8px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown-container:focus-within .dropdown {
+            display: block;
+        }
+
+        .dropdown-container input {
+            border: 1px solid #ddd;
+            padding: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .select2-container {
+            width: 200px !important;
+        }
+        .modal-content {
+            width: 130%; 
+        }
+
+ 
+   </style>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>Sales</title>
+
+
+<link rel="stylesheet" href="{% static 'salessa_template/css/bootstrap1.min.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/themefy_icon/themify-icons.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/niceselect/css/nice-select.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/owl_carousel/css/owl.carousel.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/gijgo/gijgo.min.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/font_awesome/css/all.min.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/tagsinput/tagsinput.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/datepicker/date-picker.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/vectormap-home/vectormap-2.0.2.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/scroll/scrollable.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/datatable/css/jquery.dataTables.min.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/datatable/css/responsive.dataTables.min.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/datatable/css/buttons.dataTables.min.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/text_editor/summernote-bs4.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/morris/morris.css' %}">
+
+<link rel="stylesheet" href="{% static 'salessa_template/vendors/material_icon/material-icons.css' %}" />
+
+<link rel="stylesheet" href="{% static 'salessa_template/css/metisMenu.css' %}">
+
+<link rel="stylesheet" href="{% static 'salessa_template/css/style1.css' %}" />
+<link rel="stylesheet" href="{% static 'salessa_template/css/colors/default.css' %}" id="colorSkinCSS">
+<link rel="stylesheet" href="{% static 'assets/css/styleheader.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/mobile_responsive_header.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/form.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}" />
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.js' %}" />
+
+
+</style>
+</head>
+<body class="crm_body_bg">
+  <div id="header-container">
+    <section class="main_content dashboard_part large_header_bg">
+        <style>
+            .main_content_iner.overly_inner::before {
+    
+    height: 100px;
+   
+}
+
+
+        </style>
+      <div class="main_content_iner overly_inner ">
+      
+        
+        <div class="container-fluid p-0 ">
+          <div class="header">
+            <p style="font-size:28px;">Admin</p>
+            <ul class="header nav user-menu">
+             
+              <div style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;" class="naviii">
+                <ul style="display: flex;flex-wrap: wrap;align-items: center;justify-content: center;" class="navlist">
+                 
+                  
+                  </div>
+                </ul>
+              </div>
+              <div style="display:flex; flex-direction: row; align-items: center; justify-content: space-between;">
+                <div style="margin-left: 50px;"> 
+                    <p style="font-size:24px;">Welcome ! Admin</p>
+                    <ul class="nav" style="margin: 0; padding: 0; list-style: none;">
+                        <li class="nav-item1 dropdown"></li>
+                    </ul>
+                </div>
+                <style>
+                    
+                    .scroll-container {
+                        max-height: 400px;
+                        overflow-y: auto; 
+                        
+                    }
+                    
+                </style>
+            </head>
+            <body>
+                <div id="timefield" class="nav-item1" style="text-align: right; flex-grow: 1; display: flex; justify-content: flex-end; align-items: center;">
+                    <button id="viewBtn" style="align-items: center; padding: 3px 7px; background-color: #c5ebe7; border: 1px solid #ccc; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); font-size: 12px;">
+                        <img src="../static/icons/menu.png" style="width: 20px; height: 20px; margin-right: 5px;">
+                        <span>View the Disable Field</span>
+                    </button>
+                
+                    <button id="disableBtn" style="align-items: center; padding: 3px 7px; background-color: #c5ebe7; border: 1px solid #ccc; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); font-size: 12px;">
+                        <img src="../static/icons/disable.png" style="width: 20px; height: 20px; margin-right: 5px;">
+                        <span>Disable Field</span>
+                    </button>
+                
+                    <button id="addFieldBtn" style="align-items: center; padding: 3px 7px; background-color: #c5ebe7; border: 1px solid #ccc; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); font-size: 12px;">
+                        <img src="../static/icons/form.png" style="width: 20px; height: 20px; margin-right: 5px;">
+                        <span>Add New Fields</span>
+                    </button>
+                
+                    <button id="imgBtn" style="align-items: center; padding: 3px 5px; background-color: #c5ebe7; border: 1px solid #ccc; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); font-size: 12px;">
+                        <img id="cautionImg" src="../static/icons/caution.png" class="popup-trigger" data-popup-type="Caution" style="width: 20px; height: 20px; cursor: pointer; margin-right: 5px;">
+                        
+                    </button>
+                    <button id="cautionBtn" style="align-items: center; padding: 3px 5px; background-color: #c5ebe7; border: 1px solid #ccc; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); font-size: 12px;">
+                    <img id="messageImg" src="../static/icons/msg.png" class="popup-trigger" data-popup-type="Message" style="width: 20px; height: 20px; cursor: pointer; margin-right: 5px;">
+                    </button>
+                </div>
+                
+                
+                
+               
+                <div id="popup" class="popup">
+                    <div class="container" style="padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+                        <div>
+                            <p>Adding New Field Window</p>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="width: 200px; margin-right: 10px;">Enter the Field Name:</span> 
+                                <input type="text" placeholder="" style="border: 1px solid #ddd; padding: 5px; width: 150px;"> 
+                                <span style="width: 200px; margin-right: 10px;">Enter the Sub Field Name:</span> 
+                                <input type="text" placeholder="" style="border: 1px solid #ddd; padding: 5px; width: 150px;"> 
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                                <span style="width: 200px; margin-right: 10px;">Division:</span> 
+                                <input type="text" placeholder="" style="border: 1px solid #ddd; padding: 5px; width: 150px;"> 
+                                <span style="width: 200px; margin-right: 10px;">Location:</span> 
+                                <input type="text" placeholder="" class="small-input" style="border: 1px solid #ddd; padding: 5px; width: 150px;">
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <button type="button" style="background-color: #53808C; color: white; border: none; padding: 8px 16px; margin-right: 10px; border-radius: 4px; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.3s, box-shadow 0.3s;">
+                                    Create
+                                </button>
+                                <button type="button" style="background-color: red; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.3s, box-shadow 0.3s;">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="anotherPopup" class="popup">
+                        <div class="popup-content">
+                            <p>view</p>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
+              
+                
+                
+                </div>
+                
+                <style>
+                    .popup {
+                        display: none;
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background-color: white;
+                        padding: 20px;
+                        border: 1px solid #ccc;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    }
+                
+                   
+                    .popup-content {
+                        display: block;
+                    }
+                
+                    .popup.show {
+                        display: block;
+                    }
+                </style>
+                
+                  
+                
+                
+            </div>
+            
+            
+          <div class="row">
+            <div class="col-12">
+
+              <div id="page_title_box" class="page_title_box d-flex align-items-center justify-content-between w-100">
+                <div class="page_title_left">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="scroll-container" style = "background-color: white;">
+            
+          <div id="field_out_box" class="row">
+            <div class="back-whitecard"  class="col-lg-8 card_height_100">
+               
+                <div style="padding: 50px; border-radius: 30px;" class="white_card mb_20" style="margin-bottom: 0px;">
+                    <style>
+                        .container {
+                            padding: 20px;
+                            border-radius: 10px;
+                            background-color: #f9f9f9;
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+                        }
+                    </style>
+                    
+                   
+                    <p style="color: #53808C;">Safety Officer's Enable/Disable Provision</p>
+<div style="margin-top: 20px;"></div>
+
+<div class="container" style="padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+    <div>
+        <p>
+            <span style="margin-right: 10px;">Division:</span>
+            <select id="division-select2" style="border: 1px solid #ddd; padding: 5px; width: 200px;">
+                <option></option> <!-- Ensure the input box is initially empty -->
+                {% for division in division_names %}
+                    <option value="{{ division }}">{{ division }}</option>
+                {% endfor %}
+            </select>
+
+            <span style="margin-right: 10px;">Location:</span>
+            <select id="location-select2" style="border: 1px solid #ddd; padding: 5px; width: 200px;">
+                <option></option> <!-- Ensure the input box is initially empty -->
+                {% for location in location_names %}
+                    <option value="{{ location }}">{{ location }}</option>
+                {% endfor %}
+            </select>
+        </p>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        try {
+            // Initialize Select2 for the Division dropdown
+            $('#division-select').select2({
+                placeholder: "Select a Division",
+                allowClear: true,
+                width: 'resolve'  // This makes the width auto-adjust to fit the parent element
+            });
+
+            // Initialize Select2 for the Location dropdown
+            $('#location-select').select2({
+                placeholder: "Select a Location",
+                allowClear: true,
+                width: 'resolve'  // This makes the width auto-adjust to fit the parent element
+            });
+
+            console.log("Select2 initialized successfully.");
+        } catch (error) {
+            console.error("Error initializing Select2:", error);
+        }
+    });
+</script>
+             <!-- <span style="margin-right: 10px;">Department:</span> <input type="text" placeholder="Autofetch & Optional" style="border: 1px solid #ddd; padding: 5px;"> &nbsp;&nbsp;&nbsp; 
+            <span style="margin-right: 10px;">Safety Officer:</span> <input type="text" placeholder="Autofetch" class="small-input" style="border: 1px solid #ddd; padding: 5px; width: 100px;"> -->
+        </p>
+        <p style="margin-top: 20px;"> 
+            <div class="dropdown-container">
+                <input type="text" placeholder="Select Month" readonly>
+                <div class="dropdown">
+                    <a href="#" onclick="selectMonth(event, 'January', 1)">January</a>
+                    <a href="#" onclick="selectMonth(event, 'February', 2)">February</a>
+                    <a href="#" onclick="selectMonth(event, 'March', 3)">March</a>
+                    <a href="#" onclick="selectMonth(event, 'April', 4)">April</a>
+                    <a href="#" onclick="selectMonth(event, 'May', 5)">May</a>
+                    <a href="#" onclick="selectMonth(event, 'June', 6)">June</a>
+                    <a href="#" onclick="selectMonth(event, 'July', 7)">July</a>
+                    <a href="#" onclick="selectMonth(event, 'August', 8)">August</a>
+                    <a href="#" onclick="selectMonth(event, 'September', 9)">September</a>
+                    <a href="#" onclick="selectMonth(event, 'October', 10)">October</a>
+                    <a href="#" onclick="selectMonth(event, 'November', 11)">November</a>
+                    <a href="#" onclick="selectMonth(event, 'December', 12)">December</a>
+                </div>
+            </div>
+            
+        
+            <script>
+                function selectMonth(event, month, monthNumber) {
+                    event.preventDefault();
+                    document.querySelector('.dropdown-container input').value = month;
+                    document.querySelector('.dropdown').style.display = 'none';
+                    fetchMonthData(monthNumber); // Pass the month number to the fetchMonthData function
+                }
+            
+                function fetchMonthData(monthNumber) {
+                    // Fetch data for the selected month using its numerical value (monthNumber)
+                    // Your implementation here
+                }
+            </script>
+            
+            
+            <button type="button" onclick="searchByMonth()" style="background-color: #53808C; color: white; border: none; padding: 8px 16px; margin-left: 10px; border-radius: 4px; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.3s, box-shadow 0.3s;">
+                <!-- <img src="../static/icons/search.png" style="vertical-align: middle; width: 20px; margin-right: 5px;"> Search 
+            </button> -->
+            <script>
+                function searchByMonth() {
+                    var selectedMonth = document.querySelector('.dropdown-container input').value;
+                    window.location.href = `/graph/${selectedMonth.toLowerCase()}/`; // Construct the URL with the selected month
+                }
+            </script>
+            
+            
+                <img src="../static/icons/search.png" style="vertical-align: middle; width: 20px; margin-right: 5px;"> Search 
+            </button>
+            
+            <button type="button" style="background-color: #53808C; color: white; border: none; padding: 8px 16px; margin-left: 10px; border-radius: 4px; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.3s, box-shadow 0.3s;">
+                <img src="../static/icons/reset.png" style="vertical-align: middle; width: 20px; margin-right: 5px;"> Reset
+            </button>
+            
+            
+        </p>
+    </div>
+</div>
+</div>
+
+<style>
+    .small-input {
+        width: 100px; 
+    }
+</style>
+
+                    
+                    <div style="margin-top: 20px;"></div>
+                    
+                    <style>
+                        .custom-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+                        }
+                    
+                        th, td {
+                            padding: 10px;
+                            text-align: left;
+                        }
+                    
+                        .spacer {
+                            height: 20px;
+                        }
+
+                    </style>
+                     <div style="margin-top: 20px;"></div>
+                    
+                    
+                    
+                    
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th style="width: calc(100% / 7);">S.No</th>
+                                <th style="width: calc(100% / 7);">Division</th>
+                                <th style="width: calc(100% / 7);">Location</th>
+                                <th style="width: calc(100% / 7);">Department</th>
+                                <th style="width: calc(100% / 7);">Monthly Report Status</th>
+                                <th style="width: calc(100% / 7);">Report Expiration</th>
+                                <th style="width: calc(100% / 7);">Action</th>
+                                <th style="width: calc(100% / 7);">Month</th>
+                                <th style="width: calc(100% / 7);">MIS Form No</th>
+
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Corporate</td>
+                                <td>Corp Office</td>
+                                <td>Safety</td>
+                                <td style="color: #53808C;">Report Generated</td>
+                                <td>No</td>
+                                <td>
+                                    <label id="toggleButton" style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                        <input id="toggleCheckbox" type="checkbox" style="opacity: 0; width: 0; height: 0;" onclick="toggleButton()">
+                                        <span id="toggleBackground" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                        <span id="toggleIndicator" style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Watches and Wearables</td>
+                                <td>Hosur</td>
+                                <td>Safety</td>
+                                <td style="color: red;">Not Generated</td>
+                                <td>Yes</td>
+                                <td>
+                                    <label id="toggleButton" style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                                        <input id="toggleCheckbox" type="checkbox" style="opacity: 0; width: 0; height: 0;" onclick="toggleButton()">
+                                        <span id="toggleBackground" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                                        <span id="toggleIndicator" style="position: absolute; content: ''; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 20px;"></div>
+                    
+                
+                
+                    <p style="color: #53808C;">Approval Request Details</p>
+
+                
+                <div class="field" style="margin-top: 20px; background-color: #F8F8F8; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    {% block content %}
+                    <p>
+                        <div >
+                            <style>
+                                .custom-table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+                                }
+                            
+                                th, td {
+                                    padding: 10px;
+                                    text-align: left;
+                                }
+                            
+                                .spacer {
+                                    height: 20px;
+                                }
+                            </style>
+                            <table style= "table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: calc(100% / 7);">S.No</th>
+                                        <th style="width: calc(100% / 7);">Division</th>
+                                        <th style="width: calc(100% / 7);">Location</th>
+                                        <th style="width: calc(100% / 7);">Department</th>
+                                        <th style="width: calc(100% / 7);">Approval Request Raised By</th>
+                                        <th style="width: calc(100% / 7);">Request Status</th>
+                                        <th style="width: calc(100% / 7);">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="margin-bottom: 10px;">
+                                        <td>1</td>
+                                        <td>Corporate</td>
+                                        <td>Corp Office</td>
+                                        <td>Safety</td>
+                                        <td>Person Name</td>
+                                        <td>
+                                            <div class="white_card_header" style="padding: 0px 15px; border-radius: 10px; background-color: #FFCDD2; color: #D32F2F; text-align: center;width: 80px;">
+                                                Pending
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="white_card_header" style="padding: 0px 15px; border-radius: 10px; background-color: #FFCDD2; color: #D32F2F; text-align: center;">
+                                                Click here
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="margin-bottom: 20px;">
+                                        <td>2</td>
+                                        <td>Watches and Wearables</td>
+                                        <td>Hosur</td>
+                                        <td>Safety</td>
+                                        <td>Person Name</td>
+                                        <td>
+                                            <div class="white_card_header" style="padding: 0px 15px; border-radius: 10px; background-color: #C8E6C9; color: #388E3C; text-align: center;width: 80px;">
+                                                Approved
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="white_card_header" style="padding: 0px 15px; border-radius: 10px; background-color: #BBDEFB; color: #0D47A1; text-align: center;">
+                                                Form editing
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="margin-bottom: 10px;">
+                                        <td>3</td>
+                                        <td>Watches and Wearables</td>
+                                        <td>Hosur</td>
+                                        <td>Safety</td>
+                                        <td>Person Name</td>
+                                        <td>
+                                            <div class="white_card_header" style="padding: 0px 15px; border-radius: 10px; background-color: #C8E6C9; color: #388E3C; text-align: center;width: 80px;">
+                                                Approved
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="white_card_header" style="padding: 0px 15px; border-radius: 10px; background-color: #C8E6C9; color: #388E3C; text-align: center;">
+                                                Form Submitted
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </p>
+                    
+                </div>
+                
+                    
+                    
+                </p>
+                  <canvas id="bar"></canvas>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <form id="myForm" method="post" action="/save-data/">
+    {% csrf_token %}
+    <div class="modal" id="addField" tabindex="-1">
+        <div class="modal-dialog" style="max-width: 500px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); ">
+            <div class="modal-content"  style="width:130%;">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="color: #53808C;">Adding New Field Window</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="width: 200px; margin-right: 10px;">Enter the Field Name:</span>
+                        <input type="text" id="fieldNameInput" placeholder="" style="border: 1px solid #ddd; padding: 5px; width: 150px;">
+                        <span style="color: grey; cursor: pointer; margin-left: 5px;" id="addFieldBtn"></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                        <span style="width: 200px; margin-right: 10px;">Enter Sub Field Name:</span>
+                        <input type="text" class="subField" id="subFieldNameInput" placeholder="" style="border: 1px solid #ddd; padding: 5px; width: 150px;">
+                        <span style="color: grey; cursor: pointer; margin-left: 5px;" id="addSubFieldBtn">+</span>
+                    </div>
+                    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('addSubFieldBtn').addEventListener('click', function() {
+        var container = document.getElementById('subFieldContainer');
+
+        var newInputContainer = document.createElement('div');
+        newInputContainer.style = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;';
+
+        var newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.placeholder = 'Enter Sub Field Name';
+        newInput.style = 'border: 1px solid #ddd; padding: 5px; width: 150px;';
+        newInput.classList.add("subField");
+
+        var removeBtn = document.createElement('span');
+        removeBtn.innerHTML = '×';
+        removeBtn.style = 'color: grey; cursor: pointer; margin-left: 10px; font-size: 20px;';
+        removeBtn.addEventListener('click', function() {
+            container.removeChild(newInputContainer);
+        });
+
+        newInputContainer.appendChild(newInput);
+        newInputContainer.appendChild(removeBtn);
+        container.appendChild(newInputContainer);
+    });
+
+    // Reset form fields when the modal is hidden
+    $('#addField').on('hidden.bs.modal', function () {
+        document.getElementById('fieldNameInput').value = '';
+        document.getElementById('subFieldContainer').innerHTML = '';
+        document.getElementById('division-select1').selectedIndex = -1;
+        document.getElementById('location-select1').selectedIndex = -1;
+
+        // Manually remove dynamically added sub-fields
+        const subFields = document.querySelectorAll('.subField');
+        subFields.forEach(field => field.value = '');
+    });
+
+    document.getElementById('createBtn').addEventListener('click', function() {
+        const empid = "some_empid";  // Replace with actual value or fetch from input
+        const fieldName = document.getElementById('fieldNameInput').value;
+        const subFieldName = document.getElementsByClassName('subField');
+        const fields = Array.from(subFieldName).map(field => field.value);
+
+        const divisionSelect = document.getElementById('division-select1');
+        const locationSelect = document.getElementById('location-select1');
+
+        const selectedDivision = divisionSelect.value; // Single selection for division
+        const selectedLocations = Array.from(locationSelect.selectedOptions).map(option => option.value);
+
+        // Fetch CSRF token from hidden input field
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        if (fieldName && subFieldName && selectedDivision && selectedLocations.length) {
+            selectedLocations.forEach(location => {
+                console.log(`Sending request for Division: ${selectedDivision}, Location: ${location}`);
+                fetch('/save_form/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken  // Include CSRF token in headers
+                    },
+                    body: JSON.stringify({
+                        empid: empid,
+                        title_creation: fieldName,
+                        field_name: fields,
+                        field_value: '',  // Add the appropriate field value
+                        division: selectedDivision,  // Adjusted to lowercase 'division'
+                        location: location  // Adjusted to lowercase 'location'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log(`Field created successfully for Division: ${selectedDivision} and Location: ${location}`);
+                    } else {
+                        console.error(`Error creating field for Division: ${selectedDivision} and Location: ${location}:`, data.message);
+                    }
+                })
+                .catch(error => console.error(`Error creating field for Division: ${selectedDivision} and Location: ${location}:`, error));
+            });
+        } 
+    });
+});
+</script>
+
+                    <div id="subFieldContainer" style="margin-top: 10px;"></div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                        <span style="margin-right: 10px;">Division:</span>
+                        <select id="division-select1" style="border: 1px solid #ddd; padding: 5px; width: 150px;">
+                            {% for division in division_names %}
+                                <option value="{{ division }}">{{ division }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <span style="margin-right: 10px;">Location:</span>
+                        <select id="location-select1" multiple style="border: 1px solid #ddd; padding: 5px; width: 300px;">
+                            {% for location in location_names %}
+                                <option value="{{ location }}">{{ location }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <script>function refreshPage() {
+                    location.reload();
+                }
+                </script>
+                <div style="margin-top: 10px;"></div>
+                <div class="modal-footer">
+                    <button type="button" onclick="refreshPage()" class="btn btn-success" style="background-color: #53808C;" id="createBtn" data-bs-dismiss="modal">Create</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hidden input field for CSRF token -->
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+</form>
+<div id="subFieldContainer"></div>
+
+<script>
+document.getElementById('createBtn').addEventListener('click', function() {
+    const empid = "some_empid";  // Replace with actual value or fetch from input
+    const fieldName = document.getElementById('fieldNameInput').value;
+    const subFieldName = document.getElementsByClassName('subField');
+    const fields=Array.from(subFieldName).map(field=> field.value);
+    console.log(fields)
+
+    const divisionSelect = document.getElementById('division-select1');
+    const locationSelect = document.getElementById('location-select1');
+
+    const selectedDivision = divisionSelect.value; // Single selection for division
+    const selectedLocations = Array.from(locationSelect.selectedOptions).map(option => option.value);
+
+    // Fetch CSRF token from hidden input field
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    if (fieldName && subFieldName && selectedDivision && selectedLocations.length) {
+        selectedLocations.forEach(location => {
+            console.log(`Sending request for Division: ${selectedDivision}, Location: ${location}`);
+            fetch('/save_form/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken  // Include CSRF token in headers
+    },
+    body: JSON.stringify({
+        empid: empid,
+        title_creation: fieldName,
+        field_name: fields,
+        field_value: '',  // Add the appropriate field value
+        division: selectedDivision,  // Adjusted to lowercase 'division'
+        location: location  // Adjusted to lowercase 'location'
+    })
+})
+
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log(`Field created successfully for Division: ${selectedDivision} and Location: ${location}`);
+                } else {
+                    console.error(`Error creating field for Division: ${selectedDivision} and Location: ${location}:`, data.message);
+                }
+            })
+            .catch(error => console.error(`Error creating field for Division: ${selectedDivision} and Location: ${location}:`, error));
+        });
+    } else {
+        alert('Please fill in all required fields and make selections.');
+    }
+});
+
+</script>
+
+
+    <script>
+        $.ajax({
+    url: '/your-url-to-save-form/',
+    type: 'POST',
+    data: {
+        empid: empid,
+        title_creation: title_creation,
+        field_name: field_name,
+        field_value: field_value,
+        division: division,
+        location: location,
+        csrfmiddlewaretoken: csrftoken, // Ensure to include CSRF token
+    },
+    success: function(response) {
+        if (response.status === 'success') {
+            // Update the frontend with the returned show data
+            var show = response.show;
+            $('#show-division').text(show.divisions);
+            $('#show-location').text(show.locations);
+            $('#show-titles').empty();
+            show.titles.forEach(function(title) {
+                $('#show-titles').append('<li>' + title.title_creation + '</li>');
+            });
+            // Any other updates based on the new data
+        } else {
+            alert('Error: ' + response.message);
+        }
+    },
+    error: function(xhr, status, error) {
+        alert('An error occurred: ' + error);
+    }
+});
+
+    </script>
+   
+    
+    
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("createBtn").addEventListener("click", function() {
+            var division = document.getElementById("division-select").value;
+            var location = document.getElementById("location-select").value;
+            var titleCreation = document.getElementById("fieldNameInput").value;
+            var fieldCreation = document.getElementById("subFieldNameInput").value;
+
+           
+            var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            
+            var formData = new FormData();
+            formData.append('titleCreation', titleCreation);
+            formData.append('fieldCreation', fieldCreation);
+            formData.append('division', division);
+            formData.append('location', location);
+
+            // Send data to the backend via AJAX request
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://127.0.0.1:8000/save-data/"); // URL to the save_data view
+            xhr.setRequestHeader("X-CSRFToken", csrftoken); // Set CSRF token in the header
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log("Data saved successfully!");
+                    // Optionally, perform further actions after successful data save
+                } else {
+                    console.error("Failed to save data:", xhr.statusText);
+                    // Optionally, handle errors or display a message to the user
+                }
+            };
+            xhr.onerror = function() {
+                console.error("Failed to save data.");
+                // Optionally, handle errors or display a message to the user
+            };
+            xhr.send(formData);
+        });
+    });
+</script> -->
+    <form id="myForm1" method="post">
+        {% csrf_token %}
+        <!-- {% if not disable %} -->
+        <div class="modal" id="disableModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="color: #53808C;">Disable Field Window</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Modal body content -->
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="width: 200px; margin-right: 10px;">Select the Field Name:</span>
+                            <select id="fieldSelect" style="border: 1px solid #ddd; padding: 5px; width: 150px;"></select>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <span style="width: 200px; margin-right: 10px;">Select the Sub Field Name:</span>
+                            <select id="subFieldSelect" style="border: 1px solid #ddd; padding: 5px; width: 150px;"></select>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                            <span style="margin-right: 10px;">Division:</span>
+                            <select id="division-select" style="border: 1px solid #ddd; padding: 5px; width: 150px;">
+                                {% for division in division_names %}
+                                    <option value="{{ division }}">{{ division }}</option>
+                                {% endfor %}
+                            </select>
+                            
+                            <span style="margin-right: 10px;">Location:</span>
+                            <select id="location-select"  style="border: 1px solid #ddd; padding: 5px; width: 150px;">
+                                {% for location in location_names %}
+                                    <option value="{{ location }}">{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="proceedButton" class="btn btn-success" style="background-color: #53808C;" data-bs-dismiss="modal">Proceed</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- {% endif %} -->
+    
+        <!-- Confirmation Modal -->
+        <div id="confirmationModal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you want to proceed?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="confirmYes">Yes</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+        <!-- Your other scripts -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                function enableData(fieldId, subFieldId, division, locations) {
+                    console.log(division, locations);
+                    fetch('http://127.0.0.1:8000/enabled-data/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            fieldId: fieldId,
+                            subFieldId: subFieldId,
+                            division: division,
+                            locations: locations
+                        })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Data successfully enabled/disabled');
+                        } else {
+                            console.error('Error enabling/disabling data');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error enabling/disabling data:', error);
+                    });
+                }
+            
+                document.getElementById('proceedButton').addEventListener('click', function () {
+                    var fieldId = document.getElementById('fieldSelect').value;
+                    var subFieldId = document.getElementById('subFieldSelect').value;
+                    var division = document.getElementById('division-select').value;
+            
+                    // Fetch selected locations
+                    var locationSelect = document.getElementById('location-select').value;
+                    // var selectedLocations = Array.from(locationSelect.selectedOptions).map(option => option.value);
+            
+                    // console.log(division, selectedLocations);
+                    var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+                    confirmationModal.show();
+            
+                    document.getElementById('confirmYes').addEventListener('click', function confirmHandler() {
+                        confirmationModal.hide();
+                        enableData(fieldId, subFieldId, division, locationSelect);
+                        document.getElementById('confirmYes').removeEventListener('click', confirmHandler);
+                    });
+                });
+            
+                document.querySelector('#disableModal .btn-danger').addEventListener('click', function () {
+                    // Reset selected values or perform any other actions if needed
+                });
+            });
+            </script>
+            
+
+
+<script>// Fetch data from the server and populate select elements
+    function populateSelectElements() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://127.0.0.1:8000/get-data/"); // URL to fetch data from the server
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                populateSelect("fieldSelect", data.titles); // Populate field select element
+                populateSelect("subFieldSelect", data.fields); // Populate sub field select element with titles
+                populateSelect("divisionSelect", data.divisions); // Populate division select element
+                populateSelect("locationSelect", data.locations); // Populate location select element
+            } else {
+                console.error("Failed to fetch data:", xhr.statusText);
+            }
+        };
+        xhr.onerror = function() {
+            console.error("Failed to fetch data.");
+        };
+        xhr.send();
+    }
+
+    // Helper function to populate select element
+    function populateSelect(selectId, options) {
+        var select = document.getElementById(selectId);
+        select.innerHTML = "";
+        options.forEach(function(option) {
+            var optionElement = document.createElement("option");
+            optionElement.value = option.id; // Assuming each option has an 'id' field
+            optionElement.textContent = option.title_creation || option.field || option.label; // Adjust this based on your data structure
+            select.appendChild(optionElement);
+        });
+    }
+
+    // Populate select elements when the document is loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        populateSelectElements();
+    });
+
+
+
+</script>
+<script>
+    // Function to fetch data from the server and populate the table
+    function populateTable() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://127.0.0.1:8000/disable-data/"); // URL to fetch data from the server
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                populateTableWithData(data);
+            } else {
+                console.error("Failed to fetch data:", xhr.statusText);
+            }
+        };
+        xhr.onerror = function() {
+            console.error("Failed to fetch data.");
+        };
+        xhr.send();
+    }
+
+    // Function to populate the table with fetched data
+    function populateTableWithData(data) {
+        var tableBody = document.getElementById("disableTableBody");
+        tableBody.innerHTML = ""; // Clear existing table data
+        
+        data.titles.forEach(function(title_creation, index) {
+            var row = "<tr><td>" + (index + 1) + "</td><td>" + title_creation.title_creation + "</td></tr>";
+            tableBody.innerHTML += row; // Append row to table body
+        });
+    }
+
+    // Populate the table when the document is loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        populateTable();
+    });
+</script>
+
+
+
+<div class="modal" id="viewModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            width: 130%;
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: #53808C;">Disable Field List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Content</th>
+                        </tr>
+                    </thead>
+                   
+                        <tbody id="disableTableBody">
+                            <!-- Table rows will be dynamically added here -->
+                        </tbody>
+                  
+                </table>
+            </div>
+            
+            
+            <div class="modal-footer">
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+ 
+  <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+
+  <script>
+    function toggleButton() {
+        var checkbox = document.getElementById("toggleCheckbox");
+        var indicator = document.getElementById("toggleIndicator");
+        var background = document.getElementById("toggleBackground");
+
+        if (checkbox.checked) {
+            indicator.style.transform = "translateX(26px)";
+            background.style.backgroundColor = "#66bb6a"; 
+        } else {
+            indicator.style.transform = "translateX(0px)";
+            background.style.backgroundColor = "#ccc"; 
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var addFieldBtn = document.getElementById('addFieldBtn');
+    
+   
+    document.addEventListener('DOMContentLoaded', function() {
+    var viewBtn = document.getElementById('viewBtn');
+    var disableBtn = document.getElementById('disableBtn');
+    var imgBtn = document.getElementById('imgBtn');
+    var cautionBtn = document.getElementById('cautionBtn');
+
+    // Function to show the modal
+    function showModal(modalId) {
+        var modal = new bootstrap.Modal(document.getElementById(modalId));
+        modal.show();
+    }
+
+    // Add event listeners to each button
+    if (viewBtn) {
+        viewBtn.addEventListener('click', function() {
+            var myModal = new bootstrap.Modal(document.getElementById('viewModal'))
+            myModal.show()
+           
+        });
+    }
+
+    if (disableBtn) {
+        disableBtn.addEventListener('click', function() {
+            showModal('disableModal');
+        });
+    }
+
+    if (imgBtn) {
+        imgBtn.addEventListener('click', function() {
+            showModal('imgModal');
+        });
+    }
+
+    if (cautionBtn) {
+        cautionBtn.addEventListener('click', function() {
+            showModal('cautionModal');
+        });
+    }
+});
+
+   
+
+   
+
+   
+   
+   
+    if (addFieldBtn) {
+        addFieldBtn.addEventListener('click', function() {
+            // showPopup('Add Field');
+            var myModal = new bootstrap.Modal(document.getElementById('addField'))
+            myModal.show()
+        });
+   
+    }
+    if (viewBtn) {
+        viewBtn.addEventListener('click', function() {
+            // showPopup('Add Field');
+            var myModal = new bootstrap.Modal(document.getElementById('viewModal'))
+            myModal.show()
+        });
+   
+    }
+    if (disableBtn) {
+        disableBtn.addEventListener('click', function() {
+            // showPopup('Add Field');
+            var myModal = new bootstrap.Modal(document.getElementById('disableModal'))
+            myModal.show()
+        });
+   
+    }
+   
+
+
+
+    
+
+    window.addEventListener('click', function(event) {
+        if (popup && event.target === popup) {
+            popup.classList.remove('show');
+        }
+    });
+});
+
+
+
+
+
+</script>
+
+
+<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+ 
+    
+    <div class="text-center p-4" style="background-color: #E5F7F5;">
+      <span style="color: #53808C !important;">© 2022 - 2025</span>
+      <a class="text-reset fw-bold" style="color: #53808C !important;" href="#">TITAN COMPANY LTD</a>
+    </div>
+   
+  </footer>
+{% endblock %}
+</html>
